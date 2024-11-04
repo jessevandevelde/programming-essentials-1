@@ -1,46 +1,48 @@
-// Verzin een willekeurig nummer tussen 1 en 10
+// Generate a random number between 1 and 10
 let randomNumber = GenerateRandomNumber();
 
 // Grab elements from the DOM
 const userGuessInput = document.getElementById('userGuess');
 const feedback = document.getElementById('feedback');
 
-// Hoe kunnen we de guessButton en playAgainButton selecteren?
-const guessButton = document.getElementById('?');
-const playAgainButton = document.getElementById('?');
+// Select guessButton and playAgainButton
+const guessButton = document.getElementById('guessButton');
+const playAgainButton = document.getElementById('playAgainButton');
 
 // Function to handle guesses
 guessButton.onclick = () => {
-
+    // Check if the input is empty
     if (userGuessInput.value === '') {
         feedback.textContent = 'Please enter a number!';
         return;
     }
 
-    // zet de input om naar een getal
-    const userGuess = '?';
-    
+    // Convert the input to a number
+    const userGuess = parseInt(userGuessInput.value);
 
-    // vergelijk het getal met het random getal welke 3 dingen moeten we checken?
-    // Hint: is het getal te hoog, te laag of gelijk?
-
-        
-    // dit toont de play again button en verbergt de guess button
-        // guessButton.style.display = 'none';
-        // playAgainButton.style.display = 'inline';
+    // Compare the guess to the random number
+    if (userGuess === randomNumber) {
+        feedback.textContent = 'Congratulations! You guessed the number!';
+        // Show the "Play Again" button and hide the "Guess" button
+        guessButton.style.display = 'none';
+        playAgainButton.style.display = 'inline';
+    } else if (userGuess < randomNumber) {
+        feedback.textContent = 'Too low! Try again.';
+    } else if (userGuess > randomNumber) {
+        feedback.textContent = 'Too high! Try again.';
+    }
 };
 
 // Function to reset the game
 playAgainButton.onclick = () => {
-    randomNumber = GenerateRandomNumber();
-    feedback.textContent = '';
-    userGuessInput.value = '';
-    guessButton.style.display = 'inline';
-    playAgainButton.style.display = 'none';
+    randomNumber = GenerateRandomNumber(); // Generate a new random number
+    feedback.textContent = ''; // Clear feedback message
+    userGuessInput.value = ''; // Clear input field
+    guessButton.style.display = 'inline'; // Show the "Guess" button
+    playAgainButton.style.display = 'none'; // Hide the "Play Again" button
 };
 
-// dit is een functie om een willekeurig getal te genereren
-// tussen 1 en 10
+// Function to generate a random number between 1 and 10
 function GenerateRandomNumber() {
     return Math.floor(Math.random() * 10) + 1;
 }
